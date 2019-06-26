@@ -1,6 +1,8 @@
 (function (angular) {
     'use strict';
     angular.module('ngPokeDex', [
-        'ngRoute', 'shared'
+        'ngRoute',
+        'core',
+        'shared'
     ]);
 })(window.angular);

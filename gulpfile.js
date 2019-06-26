@@ -10,7 +10,8 @@ var PATH = [
     './app/src/app.module.js', 
     './app/src/app.config.js', 
     './app/src/components/**/*.js', 
-    './app/src/shared/**/*.js'
+    './app/src/shared/**/*.js',
+    './app/src/core/**/*.js'
 ];
 
 gulp.task('build-js', function () {
