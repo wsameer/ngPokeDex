@@ -1,6 +1,6 @@
 (function (angular) {
     'use strict';
-    angular.module('ngPokeDex', [
+    angular.module('ngPokedex', [
         'ngRoute',
         'core',
         'shared'

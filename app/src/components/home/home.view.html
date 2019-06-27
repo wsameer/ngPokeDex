@@ -1,3 +1,41 @@
-<div>
-    
+<div class="row home-component">
+    <div class="col-md-4 offset-md-4">
+        <h3 class="p-5-0">What Pokemon are you looking for?</h3>
+        <div class="form-group has-search p-5-0">
+            <span class="fa fa-search form-control-feedback"></span>
+            <input type="email" class="form-control" id="searchPokemon"
+                placeholder="Search Pokemon, Move, Ability, etc">
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="col-sm-12">
+
+            <!-- LOADER -->
+            <div class="text-center" ng-if="homeVm.loading">
+                <h3>LOADING....</h3>
+            </div>
+
+            <!-- DATA -->
+            <div class="container">
+                <div class="row" class="pokemon-list" ng-hide="homeVm.loading">
+                    <div class="col-sm-4" ng-repeat="pokemon in homeVm.pokemons track by $index">
+                        <div class="widget-panel widget-style-1 bg-pink">
+                            <a href="" class="pokemon-image">
+                                <img src="https://assets.pokemon.com/assets/cms2/img/pokedex/detail/{{pokemon.idForImage}}.png" width="70%">
+                            </a>
+                            <h3 class="m-0 counter text-white">{{pokemon.name | ucfirst}}</h3>
+                            <div class="pokemon-type">Poison</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LOAD MORE -->
+            <!-- <button type="button" class="btn btn-primary btn-lg btn-block"
+                ng-click="homeVm.getPokemons(homeVm.nextDataSetUrl)">
+                Load more
+            </button> -->
+        </div>
+    </div>
 </div>

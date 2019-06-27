@@ -4,7 +4,7 @@
 
   function AppHeaderController() {
     var appHeaderVm = this;
-    appHeaderVm.appName = 'ngPokeDex';
+    appHeaderVm.appName = 'ngPokedex';
     appHeaderVm.search = null;
   }
 

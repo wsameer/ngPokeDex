@@ -1,5 +1,5 @@
 angular
-  .module('ngPokeDex')
+  .module('ngPokedex')
   .config(config);
 
 function config($routeProvider) {
