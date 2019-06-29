@@ -19,6 +19,7 @@
 
     function ucfirstFilter() {
         return function (input) {
+            if (!input) return;
             return input
                 .split(' ')
                 .map(function (ch) {
