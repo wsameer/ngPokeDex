@@ -13,12 +13,17 @@ angular
 
 function config($routeProvider) {
   $routeProvider
-    .when('/', {
+    .when('/pokemons', {
       templateUrl: 'src/components/home/home.view.html',
       controller: 'HomeController',
       controllerAs: 'homeVm'
     })
-    .otherwise('/');
+    .when('/pokemons/:id', {
+      templateUrl: 'src/components/pokemon/pokemon.view.html',
+      controller: 'PokemonController',
+      controllerAs: 'pVm'
+    })
+    .otherwise('/pokemons');
 }
 
 (function (angular) {
@@ -203,15 +208,22 @@ function config($routeProvider) {
 
   function Pokemon($http) {
 
+    var pokemons = [];
+
     return {
-      getPokemonsByOffset: getPokemonsByOffset,
+      // getPokemonsByOffset: getPokemonsByOffset,
       getPokemonById: getPokemonById,
-      getPokemonSpecies: getPokemonSpecies
+      getPokemonSpecies: getPokemonSpecies,
+      getCachedPokemons: getCachedPokemons
     };
+
+    function getCachedPokemons() {
+      return pokemons;
+    }
 
     function getPokemonSpecies(url) {
       if (!url) return;
-      
+
       return $http.get(url)
         .then(requestComplete)
         .catch(requestFailed);
@@ -221,9 +233,12 @@ function config($routeProvider) {
       if (!id) return;
 
       var apiUrl = "https://pokeapi.co/api/v2/pokemon/" + id + "/";
-
+     
       return $http.get(apiUrl)
-        .then(requestComplete)
+        .then(function (response) {
+          pokemons.push(response);
+          return response;
+        })
         .catch(requestFailed);
     }
 
@@ -231,13 +246,13 @@ function config($routeProvider) {
      * Get the list of pokemons based on offset
      * @param {Integer} offset The offset from where to start getting the data
      */
-    function getPokemonsByOffset(url) {
-      var apiUrl = url || "https://pokeapi.co/api/v2/pokemon/?offset=0&limit=12";
+    // function getPokemonsByOffset(url) {
+    //   var apiUrl = url || "https://pokeapi.co/api/v2/pokemon/?offset=0&limit=12";
 
-      return $http.get(apiUrl)
-        .then(requestComplete)
-        .catch(requestFailed);
-    }
+    //   return $http.get(apiUrl)
+    //     .then(requestComplete)
+    //     .catch(requestFailed);
+    // }
 
     function requestComplete(response) {
       return response;

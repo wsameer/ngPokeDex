@@ -4,10 +4,15 @@ angular
 
 function config($routeProvider) {
   $routeProvider
-    .when('/', {
+    .when('/pokemons', {
       templateUrl: 'src/components/home/home.view.html',
       controller: 'HomeController',
       controllerAs: 'homeVm'
     })
-    .otherwise('/');
+    .when('/pokemons/:id', {
+      templateUrl: 'src/components/pokemon/pokemon.view.html',
+      controller: 'PokemonController',
+      controllerAs: 'pVm'
+    })
+    .otherwise('/pokemons');
 }

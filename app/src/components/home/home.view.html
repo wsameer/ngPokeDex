@@ -1,7 +1,6 @@
 <div class="row home-component">
   <div class="col-md-4 offset-md-4">
     <h3 class="p-5-0">What Pokemon are you looking for?</h3>
-    <pre>{{homeVm.pokemonIndex}}</pre>
     <div class="form-group has-search p-5-0">
       <span class="fa fa-search form-control-feedback"></span>
       <input type="email" class="form-control" id="searchPokemon" placeholder="Search Pokemon, Move, Ability, etc">
@@ -20,11 +19,11 @@
 
       <!-- DATA -->
       <div class="container">
-        <div class="row" class="pokemon-list" ng-hide="homeVm.loading">
+        <div class="row pokemon-list" ng-hide="homeVm.loading">
           <div class="col-sm-4" ng-repeat="pokemon in homeVm.pokemons | orderBy: 'id'">
-            <div class="widget-panel widget-style-1" ng-class="'bg-' + pokemon.types[0].type.name">
+            <div class="widget-panel" ng-class="'bg-' + pokemon.types[0].type.name">
               <span class="pokemon-number text-white pull-right" ng-bind="'#' + pokemon.idForImage"></span>
-              <a class="pokemon-image">
+              <a ng-href="#/pokemons/{{pokemon.id}}" class="pokemon-image">
                 <img src="https://assets.pokemon.com/assets/cms2/img/pokedex/detail/{{pokemon.idForImage}}.png"
                   width="70%">
               </a>

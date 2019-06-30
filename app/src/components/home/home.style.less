@@ -1,0 +1,66 @@
+.home-component {
+    .has-search {
+        .form-control {
+            padding-left: 2.375rem;
+            border-radius: 20px;
+            background: #f3f3f3;
+            font-size: 14px;
+            border: 1px solid #f3f3f3;
+        }
+
+        .form-control-feedback {
+            position: absolute;
+            z-index: 2;
+            display: block;
+            width: 2.375rem;
+            height: 2.375rem;
+            line-height: 2.375rem;
+            text-align: center;
+            pointer-events: none;
+            color: #000;
+            margin-left: 4px;
+            font-size: 14px;
+        }
+    }
+
+    .pokemon-list {   
+        .widget-panel {
+            padding: 30px;
+            border-radius: 20px;
+            color: #ffffff;
+            margin-bottom: 6%;
+            min-height: 185px;
+
+            h2 {
+                font-size: 32px;
+            }
+            
+            .pokemon-type {
+                text-transform: capitalize;
+                font-size: 16px;
+                padding-top: 6px;
+            }
+            
+            .pokemon-number {
+                font-weight: 700;
+                margin-top: -20px;
+                font-size: 20px;
+                margin-right: -10px;
+            }
+            
+            .pokemon-type {
+                .p-pill {
+                    padding: 10px 20px;
+                    font-size: 14px;
+                }
+            }
+
+            .pokemon-image {
+                position: absolute;
+                right: -50px;
+                bottom: 10px;
+                cursor: pointer;
+            }
+        }
+    }
+}

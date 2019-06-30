@@ -4,14 +4,20 @@ var gulp = require('gulp'),
     concat = require('gulp-concat'),
     rename = require('gulp-rename'),
     uglify = require('gulp-uglify'),
+    less = require('gulp-less'),
     sourcemaps = require('gulp-sourcemaps');
 
 var PATH = [
-    './app/src/app.module.js', 
-    './app/src/app.config.js', 
-    './app/src/components/**/*.js', 
+    './app/src/app.module.js',
+    './app/src/app.config.js',
+    './app/src/components/**/*.js',
     './app/src/shared/**/*.js',
     './app/src/core/**/*.js'
+];
+
+var LESS_PATH = [
+    'app/src/components/**/*.less',
+    'app/assets/less/style.less',
 ];
 
 gulp.task('build-js', function () {
@@ -25,4 +31,13 @@ gulp.task('build-js', function () {
         .pipe(gulp.dest('./app/dist'));
 });
 
-gulp.task('default', gulp.series('build-js', function () { }));
+gulp.task('less', function () {
+    return gulp.src(LESS_PATH)
+        .pipe(sourcemaps.init())
+        .pipe(concat('style.less'))
+        .pipe(less())
+        .pipe(sourcemaps.write('./maps'))
+        .pipe(gulp.dest('./app/dist/css'));
+});
+
+gulp.task('default', gulp.series(['build-js', 'less'], function () { }));
