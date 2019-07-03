@@ -16,8 +16,8 @@ var PATH = [
 ];
 
 var LESS_PATH = [
+    'app/assets/less/index.less',
     'app/src/components/**/*.less',
-    'app/assets/less/style.less',
 ];
 
 gulp.task('build-js', function () {
@@ -34,10 +34,14 @@ gulp.task('build-js', function () {
 gulp.task('less', function () {
     return gulp.src(LESS_PATH)
         .pipe(sourcemaps.init())
-        .pipe(concat('style.less'))
+        .pipe(concat('./style.less'))
         .pipe(less())
         .pipe(sourcemaps.write('./maps'))
         .pipe(gulp.dest('./app/dist/css'));
+});
+
+gulp.task('watch', function() {
+    gulp.watch(LESS_PATH, ['less']);  // Watch all the .less files, then run the less task
 });
 
 gulp.task('default', gulp.series(['build-js', 'less'], function () { }));

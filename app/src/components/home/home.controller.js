@@ -12,17 +12,12 @@
 
     /** {Boolean} Flag to mantain the status of busy indicator */
     homeVm.loading = false;
-
+    /** {Integer} The beginning of the offset to get pokemons data */
+    homeVm.pokemonIndex = 1;
     /** {Array<objects>} Stores the data of pokemons */
     homeVm.pokemons = [];
-
-
-    homeVm.nextDataSetUrl = null;
-    homeVm.pokemonIndex = 1;
-
+    
     // method bindings
-    homeVm.getPokemonSpecies = getPokemonSpecies;
-    // homeVm.getPokemonsByOffset = getPokemonsByOffset;
     homeVm.getPokemons = getPokemons;
 
     onInit();
@@ -38,6 +33,7 @@
      * @param {Integer} toIndex   The end of the offset for the API
      */
     function getPokemons(fromIndex, toIndex) {
+      fromIndex = fromIndex ? fromIndex : 1;
       toIndex = toIndex ? toIndex : fromIndex + 9;
       for (var index = fromIndex; index < toIndex; index++) {
         getPokemonById(index);
@@ -67,45 +63,26 @@
     function getPokemonById(pokemonId) {
       return Pokemon.getPokemonById(pokemonId)
         .then(function (pokemonData) {
-          var data = pokemonData.data;
-          homeVm.pokemons.push({
-            id: data.id,
-            idForImage: ('000' + data.id).slice(-3),
-            name: data.name,
-            abilities: data.abilities,
-            base_experience: data.base_experience,
-            height: data.height,
-            weight: data.weight,
-            descriptionUrl: data.species.url,
-            types: sortArrayByKey(data.types, 'slot'),
-            stats: data.stats
-          });
-
+          if (!pokemonData) {
+            return null;
+          }
+          var newPokemon = {
+            id: pokemonData.data.id,
+            idForImage: ('000' + pokemonData.data.id).slice(-3),
+            name: pokemonData.data.name,
+            abilities: pokemonData.data.abilities,
+            base_experience: pokemonData.data.base_experience,
+            height: pokemonData.data.height,
+            weight: pokemonData.data.weight,
+            descriptionUrl: pokemonData.data.species.url,
+            types: sortArrayByKey(pokemonData.data.types, 'slot'),
+            stats: pokemonData.data.stats
+          };
+          
+          homeVm.pokemons.push(newPokemon);
+          Pokemon.addPokemonToCache(newPokemon);
           return homeVm.pokemons;
         });
     }
-
-    /**
-     * Calls the API url given in the parameter. Returns the description (flavor_text) only from the response
-     * @param {String} url The API url from where the data is to fetched
-     */
-    function getPokemonSpecies(url) {
-      return Pokemon.getPokemonSpecies(url)
-        .then(function (response) {
-          return response.flavor_text_entries[1].flavor_text || "Not Found";
-        });
-    }
-
-    /**
-     * Gets a list of pokemons from the POKEDEX API
-     * @param {String} dataUrl The url to get pokemons with the correct values of offset and limit
-     */
-    // function getPokemonsByOffset(dataUrl) {
-    //   return Pokemon.getPokemonsByOffset(dataUrl)
-    //     .then(function (response) {
-    //       homeVm.loading = false;
-    //       return response;
-    //     });
-    // }
   }
 })(window.angular);

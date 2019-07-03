@@ -15,8 +15,17 @@
       // getPokemonsByOffset: getPokemonsByOffset,
       getPokemonById: getPokemonById,
       getPokemonSpecies: getPokemonSpecies,
-      getCachedPokemons: getCachedPokemons
+      getCachedPokemons: getCachedPokemons,
+      getPokemonByIdLocal: getPokemonByIdLocal,
+      addPokemonToCache: addPokemonToCache
     };
+
+    function addPokemonToCache(pokemonObj) {
+      if (pokemonObj) {
+        pokemons.push(pokemonObj);
+      }
+      return;
+    }
 
     function getCachedPokemons() {
       return pokemons;
@@ -30,6 +39,20 @@
         .catch(requestFailed);
     }
 
+    function getPokemonByIdLocal(id) {
+      id = parseInt(id, 10);
+      
+      if (pokemons.length < 1) {
+        return null;
+      }
+
+      var searchedPokemon = pokemons.filter(function (pokemon) {
+        return id === pokemon.id;
+      });
+
+      return searchedPokemon;
+    }
+
     function getPokemonById(id) {
       if (!id) return;
 
@@ -37,7 +60,6 @@
      
       return $http.get(apiUrl)
         .then(function (response) {
-          pokemons.push(response);
           return response;
         })
         .catch(requestFailed);

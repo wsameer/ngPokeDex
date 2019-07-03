@@ -9,19 +9,23 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>ngPokedex</title>
   <meta name="description" content="">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="assets/lib/html5-boilerplate/dist/css/normalize.css">
-  <link rel="stylesheet" href="assets/lib/html5-boilerplate/dist/css/main.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="author" content="Sameer Waskar">
+
+  <title>ngPokedex</title>
+  
   <link rel="stylesheet" href="assets/lib/bootstrap/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="dist/css/style.css">
 
-  <script src="assets/lib/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
   <script src="assets/lib/bootstrap/dist/js/bootstrap.min.js"></script>
   <script src="assets/lib/angular/angular.min.js"></script>
   <script src="assets/lib/angular-route/angular-route.min.js"></script>
+  <script src="assets/lib/angular-ui-bootstrap/dist/ui-bootstrap.js"></script>
   <script src="dist/app.js"></script>
 </head>
 
@@ -31,16 +35,24 @@
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
   <![endif]-->
 
-  <div class="app-content-wrapper">
+  <app-header></app-header>
 
-    <app-header></app-header>
+  <main role="main">
 
-    <div class="container-fluid">
-      <!-- Dynamic View -->
-      <div ng-view></div>
-    </div> <!-- ./container-fluid -->
+    <!-- Dynamic View -->
+    <div ng-view></div>
+  </main>
 
-  </div> <!-- ./app-content-wrapper -->
+  <!-- <footer class="text-muted">
+    <div class="container">
+      <p class="float-right">
+        <a href="#">Back to top</a>
+      </p>
+      <p>Album example is &copy; Bootstrap, but please download and customize it for yourself!</p>
+      <p>New to Bootstrap? <a href="../../">Visit the homepage</a> or read our <a href="../../getting-started/">getting
+          started guide</a>.</p>
+    </div>
+  </footer> -->
 
 </body>
 

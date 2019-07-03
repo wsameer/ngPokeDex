@@ -5,7 +5,13 @@
   function AppHeaderController() {
     var appHeaderVm = this;
     appHeaderVm.appName = 'ngPokedex';
-    appHeaderVm.search = null;
+    appHeaderVm.showAboutUs = false;
+
+    appHeaderVm.toggleAboutUs = toggleAboutUs;
+
+    function toggleAboutUs() {
+      return appHeaderVm.showAboutUs = !appHeaderVm.showAboutUs;
+    };
   }
 
   angular

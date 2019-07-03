@@ -1,65 +1,95 @@
 .home-component {
     .has-search {
         .form-control {
-            padding-left: 2.375rem;
+            padding-left : 2.375rem;
             border-radius: 20px;
-            background: #f3f3f3;
-            font-size: 14px;
-            border: 1px solid #f3f3f3;
+            background   : #f3f3f3;
+            font-size    : 14px;
+            border       : 1px solid #f3f3f3;
         }
 
         .form-control-feedback {
-            position: absolute;
-            z-index: 2;
-            display: block;
-            width: 2.375rem;
-            height: 2.375rem;
-            line-height: 2.375rem;
-            text-align: center;
+            position      : absolute;
+            z-index       : 2;
+            display       : block;
+            width         : 2.375rem;
+            height        : 2.375rem;
+            line-height   : 2.375rem;
+            text-align    : center;
             pointer-events: none;
-            color: #000;
-            margin-left: 4px;
-            font-size: 14px;
+            color         : #000;
+            margin-left   : 4px;
+            font-size     : 14px;
         }
     }
 
-    .pokemon-list {   
+    .spinner-wrapper {
+        height: 500px;
+
+        .center-hv {
+            position         : absolute;
+            left             : 50%;
+            top              : 50%;
+            -webkit-transform: translate(-50%, -50%);
+            transform        : translate(-50%, -50%);
+        }
+    }
+
+    .pokemon-list {
+        .app-label {
+            font-size: 32px;
+            margin   : 20px 0;
+        }
+
         .widget-panel {
-            padding: 30px;
+            padding      : 0px 20px;
             border-radius: 20px;
-            color: #ffffff;
-            margin-bottom: 6%;
-            min-height: 185px;
+            color        : #ffffff;
+            margin-bottom: 4%;
+            min-height   : 130px;
+
+            .no-decoration {
+                text-decoration: none;
+            }
 
             h2 {
                 font-size: 32px;
             }
-            
-            .pokemon-type {
-                text-transform: capitalize;
-                font-size: 16px;
-                padding-top: 6px;
+
+            .pokemon-name {
+                font-size  : 16px;
+                font-weight: 500;
             }
-            
+
             .pokemon-number {
                 font-weight: 700;
-                margin-top: -20px;
-                font-size: 20px;
-                margin-right: -10px;
+                font-size  : 16px;
+                width      : 100%;
+                margin-top : 10px;
+                height     : 15px;
             }
-            
+
             .pokemon-type {
+                text-transform: capitalize;
+                padding-top   : 2px;
+                color         : #fff;
+
                 .p-pill {
-                    padding: 10px 20px;
-                    font-size: 14px;
+                    padding    : 6px 12px;
+                    font-size  : 10px;
+                    font-weight: 400;
                 }
             }
 
             .pokemon-image {
                 position: absolute;
-                right: -50px;
-                bottom: 10px;
-                cursor: pointer;
+                right   : 10px;
+                bottom  : 2px;
+                cursor  : pointer;
+
+                .wd-30 {
+                    width: 100px;
+                }
             }
         }
     }
