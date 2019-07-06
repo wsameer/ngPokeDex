@@ -3,6 +3,7 @@
     angular.module('ngPokedex', [
         'ngRoute',
         'ui.bootstrap',
+        'ui.bootstrap.tpls',
         'core',
         'shared'
     ]);
@@ -20,9 +21,9 @@ function config($routeProvider) {
       controllerAs: 'homeVm'
     })
     .when('/pokemons/:id', {
-      templateUrl: 'src/components/pokemon/pokemon.view.html',
-      controller: 'PokemonController',
-      controllerAs: 'pVm'
+      templateUrl: 'src/components/pokemonDetails/pokemonDetails.view.html',
+      controller: 'PokemonDetailsController',
+      controllerAs: 'pokeDetailsVm'
     })
     .otherwise('/pokemons');
 }
@@ -41,11 +42,13 @@ function config($routeProvider) {
 
     /** {Boolean} Flag to mantain the status of busy indicator */
     homeVm.loading = false;
+
     /** {Integer} The beginning of the offset to get pokemons data */
     homeVm.pokemonIndex = 1;
+
     /** {Array<objects>} Stores the data of pokemons */
     homeVm.pokemons = [];
-    
+
     // method bindings
     homeVm.getPokemons = getPokemons;
 
@@ -53,7 +56,7 @@ function config($routeProvider) {
     function onInit() {
       // start the loading indicator
       homeVm.loading = true;
-      return homeVm.getPokemons(homeVm.pokemonIndex, homeVm.pokemonIndex + 9);
+      return homeVm.getPokemons(homeVm.pokemonIndex, homeVm.pokemonIndex + 10);
     }
 
     /**
@@ -63,12 +66,29 @@ function config($routeProvider) {
      */
     function getPokemons(fromIndex, toIndex) {
       fromIndex = fromIndex ? fromIndex : 1;
-      toIndex = toIndex ? toIndex : fromIndex + 9;
+      toIndex = toIndex ? toIndex : fromIndex + 10;
       for (var index = fromIndex; index < toIndex; index++) {
-        getPokemonById(index);
-        homeVm.pokemonIndex++;
+        getPokemonById(index)
+          .then(function (newPokemon) {
+            if (newPokemon) {
+              addPokemonToLocalStorage(newPokemon);
+              homeVm.pokemonIndex++;
+            }
+          });
       }
       homeVm.loading = false;
+    }
+
+    function addPokemonToLocalStorage(newP) {
+      var doesPokemonAlreadyExists = homeVm.pokemons.find(function (pokemon) {
+        return newP.id === pokemon.id;
+      });
+
+      if (!doesPokemonAlreadyExists) {
+        homeVm.pokemons.push(newP);
+        Pokemon.addPokemonToCache(newP);
+      }
+      return true;
     }
 
     /**
@@ -95,7 +115,8 @@ function config($routeProvider) {
           if (!pokemonData) {
             return null;
           }
-          var newPokemon = {
+
+          return {
             id: pokemonData.data.id,
             idForImage: ('000' + pokemonData.data.id).slice(-3),
             name: pokemonData.data.name,
@@ -107,10 +128,6 @@ function config($routeProvider) {
             types: sortArrayByKey(pokemonData.data.types, 'slot'),
             stats: pokemonData.data.stats
           };
-          
-          homeVm.pokemons.push(newPokemon);
-          Pokemon.addPokemonToCache(newPokemon);
-          return homeVm.pokemons;
         });
     }
   }
@@ -120,74 +137,81 @@ function config($routeProvider) {
 
   angular
     .module('ngPokedex')
-    .controller('PokemonController', PokemonController);
+    .controller('PokemonDetailsController', PokemonDetailsController);
 
-  PokemonController.$inject = ['$routeParams', 'Pokemon'];
+  PokemonDetailsController.$inject = ['$routeParams', '$location', 'Pokemon'];
 
-  function PokemonController($routeParams, Pokemon) {
-    var pVm = this;
+  function PokemonDetailsController($routeParams, $location, Pokemon) {
+    var pokeDetailsVm = this;
 
-    pVm.flavor_text = null;
+    pokeDetailsVm.flavor_text = null;
 
-    pVm.pokemonId = $routeParams.id;
-    pVm.pokemonDetails = null;
+    pokeDetailsVm.pokemonId = $routeParams.id;
+    pokeDetailsVm.pokemonDetails = null;
 
     onInit();
     function onInit() {
 
-      // pVm.pokemonDetails = Pokemon.getPokemonByIdLocal(pVm.pokemonId);
-      pVm.pokemonDetails = {
-        "id":1,
-        "idForImage":"001",
-        "name":"bulbasaur",
-        "abilities":[{
-          "ability": {
-            "name":"chlorophyll",
-            "url":"https://pokeapi.co/api/v2/ability/34/"
-          },
-          "is_hidden":true,
-          "slot":3
-        }, {
-          "ability": {
-            "name":"overgrow",
-            "url":"https://pokeapi.co/api/v2/ability/65/"
-          },
-          "is_hidden":false,
-          "slot":1
-        }],
-        "base_experience":64,
-        "height":7,
-        "weight":69,
-        "descriptionUrl": "https://pokeapi.co/api/v2/pokemon-species/1/",
-        "types":[{
-          "slot":1,
-          "type": {
-            "name":"grass",
-            "url":"https://pokeapi.co/api/v2/type/12/"
-          }
-        }, {
-          "slot":2,
-          "type": {
-            "name":"poison",
-            "url":"https://pokeapi.co/api/v2/type/4/"
-          }
-        }],
-        "stats": [{
-          "base_stat":45,
-          "effort":0,
-          "stat": {
-            "name":"speed",
-            "url":"https://pokeapi.co/api/v2/stat/6/"}},{"base_stat":65,"effort":0,"stat":{"name":"special-defense","url":"https://pokeapi.co/api/v2/stat/5/"}},{"base_stat":65,"effort":1,"stat":{"name":"special-attack","url":"https://pokeapi.co/api/v2/stat/4/"}},{"base_stat":49,"effort":0,"stat":{"name":"defense","url":"https://pokeapi.co/api/v2/stat/3/"}},{"base_stat":49,"effort":0,"stat":{"name":"attack","url":"https://pokeapi.co/api/v2/stat/2/"}},{"base_stat":45,"effort":0,"stat":{"name":"hp","url":"https://pokeapi.co/api/v2/stat/1/"}}]
-      };
-      console.log(pVm.pokemonDetails);
+      pokeDetailsVm.pokemonDetails = Pokemon.getPokemonByIdLocal(pokeDetailsVm.pokemonId);
 
-      if (!pVm.pokemonId) {
-        pVm.pokemonId = 1;
+      // pokemon not found
+      if (pokeDetailsVm.pokemonDetails == null) {
+        $location.path('pokemons');
+        return;
       }
-      return getPokemonSpecies("https://pokeapi.co/api/v2/pokemon-species/" + pVm.pokemonId)
+
+      // pokeDetailsVm.pokemonDetails = {
+      //   "id":1,
+      //   "idForImage":"001",
+      //   "name":"bulbasaur",
+      //   "abilities":[{
+      //     "ability": {
+      //       "name":"chlorophyll",
+      //       "url":"https://pokeapi.co/api/v2/ability/34/"
+      //     },
+      //     "is_hidden":true,
+      //     "slot":3
+      //   }, {
+      //     "ability": {
+      //       "name":"overgrow",
+      //       "url":"https://pokeapi.co/api/v2/ability/65/"
+      //     },
+      //     "is_hidden":false,
+      //     "slot":1
+      //   }],
+      //   "base_experience":64,
+      //   "height":7,
+      //   "weight":69,
+      //   "descriptionUrl": "https://pokeapi.co/api/v2/pokemon-species/1/",
+      //   "types":[{
+      //     "slot":1,
+      //     "type": {
+      //       "name":"grass",
+      //       "url":"https://pokeapi.co/api/v2/type/12/"
+      //     }
+      //   }, {
+      //     "slot":2,
+      //     "type": {
+      //       "name":"poison",
+      //       "url":"https://pokeapi.co/api/v2/type/4/"
+      //     }
+      //   }],
+      //   "stats": [{
+      //     "base_stat":45,
+      //     "effort":0,
+      //     "stat": {
+      //       "name":"speed",
+      //       "url":"https://pokeapi.co/api/v2/stat/6/"}},{"base_stat":65,"effort":0,"stat":{"name":"special-defense","url":"https://pokeapi.co/api/v2/stat/5/"}},{"base_stat":65,"effort":1,"stat":{"name":"special-attack","url":"https://pokeapi.co/api/v2/stat/4/"}},{"base_stat":49,"effort":0,"stat":{"name":"defense","url":"https://pokeapi.co/api/v2/stat/3/"}},{"base_stat":49,"effort":0,"stat":{"name":"attack","url":"https://pokeapi.co/api/v2/stat/2/"}},{"base_stat":45,"effort":0,"stat":{"name":"hp","url":"https://pokeapi.co/api/v2/stat/1/"}}]
+      // };
+      // console.log(pokeDetailsVm.pokemonDetails);
+
+      if (!pokeDetailsVm.pokemonId) {
+        pokeDetailsVm.pokemonId = 1;
+      }
+      return getPokemonSpecies("https://pokeapi.co/api/v2/pokemon-species/" + pokeDetailsVm.pokemonId)
         .then(function (response) {
-          pVm.pokemonDetails.flavorText = response.flavor_text_entries[1].flavor_text || "Not Found";
-          pVm.pokemonDetails.genera = response.genera[2].genus;
+          pokeDetailsVm.pokemonDetails.flavorText = response.flavor_text_entries[1].flavor_text || "Not Found";
+          pokeDetailsVm.pokemonDetails.genera = response.genera[2].genus;
         });
     }
 
@@ -294,7 +318,12 @@ function config($routeProvider) {
 
     function addPokemonToCache(pokemonObj) {
       if (pokemonObj) {
-        pokemons.push(pokemonObj);
+
+        var thisPokemonExists = pokemons.find(function (pokemon) {
+          return pokemon.id === pokemonObj.id;
+        });
+
+        !thisPokemonExists ? pokemons.push(pokemonObj) : null;
       }
       return;
     }
@@ -322,7 +351,7 @@ function config($routeProvider) {
         return id === pokemon.id;
       });
 
-      return searchedPokemon;
+      return searchedPokemon[0];
     }
 
     function getPokemonById(id) {

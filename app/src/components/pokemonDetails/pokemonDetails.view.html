@@ -1,0 +1,68 @@
+<div class="container pokemon-details" ng-class="'bg-' + pokeDetailsVm.pokemonDetails.types[0].type.name">
+
+    <!-- TOP ROW -->
+    <div class="row top-row white-text">
+
+        <!-- FIRST GROUP -->
+        <div class="col-12">
+            <!-- BACK BUTTON -->
+            <a href="#!/pokemons" class="btn back-btn">
+                <i class="fa fa-long-arrow-left" aria-hidden="true"></i>
+            </a>
+            <!-- HEART -->
+            <button class="btn pull-right heart-btn">
+                <i class="fa fa-heart-o" aria-hidden="true"></i>
+            </button>
+        </div>
+
+        <!-- SECOND GROUP -->
+        <!-- POKEMON NAME -->
+        <h2 class="col-8 pokemon-name m-0" ng-bind="pokeDetailsVm.pokemonDetails.name | ucfirst"></h2>
+        <!-- POKEMON NUMBER -->
+        <p class="col-4 pokemon-number text-right m-0">
+            <strong ng-bind="'#' + pokeDetailsVm.pokemonDetails.idForImage"></strong>
+        </p>
+
+        <!-- THIRD GROUP -->
+        <div class="col-6 inline">
+            <div class="pokemon-type" ng-repeat="type in pokeDetailsVm.pokemonDetails.types">
+                <div class="badge badge-pill p-pill" ng-class="pokeDetailsVm.pokemonDetails.types[0].type.name">
+                    {{type.type.name}}
+                </div>
+            </div>
+        </div>
+
+        <!-- POKEMON GENRE -->
+        <p class="col-6 pokemon-genera text-right m-0" ng-bind="pokeDetailsVm.pokemonDetails.genera"></p>
+
+        <!-- POKEMON IMAGE -->
+        <div class="col-sm pokemon-image text-center">
+            <img src="https://assets.pokemon.com/assets/cms2/img/pokedex/detail/{{pokeDetailsVm.pokemonDetails.idForImage}}.png"
+                height="200">
+        </div>
+    </div>
+
+    <!-- BOTTOM ROW -->
+    <div class="row bottom-row">
+        <div class="col-sm pokemon-tabs">
+
+            <!-- TABS HERE -->
+            <uib-tabset active="0">
+                <uib-tab index="0" heading="About">
+                    <div class="col-sm">
+                        <div class="pokemon-details">
+                            <p ng-bind="pokeDetailsVm.pokemonDetails.flavorText"></p>
+                        </div>
+                    </div>
+                    <pokemon-about></pokemon-about>
+                </uib-tab>
+                <uib-tab index="1" heading="Base Stats">
+                    <pokemon-stats></pokemon-stats>
+                </uib-tab>
+                <uib-tab index="2" heading="Evolution">
+                    <pokemon-evolution></pokemon-evolution>
+                </uib-tab>
+            </uib-tabset>
+        </div>
+    </div>
+</div>

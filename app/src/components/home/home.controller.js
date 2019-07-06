@@ -12,11 +12,13 @@
 
     /** {Boolean} Flag to mantain the status of busy indicator */
     homeVm.loading = false;
+
     /** {Integer} The beginning of the offset to get pokemons data */
     homeVm.pokemonIndex = 1;
+
     /** {Array<objects>} Stores the data of pokemons */
     homeVm.pokemons = [];
-    
+
     // method bindings
     homeVm.getPokemons = getPokemons;
 
@@ -24,7 +26,7 @@
     function onInit() {
       // start the loading indicator
       homeVm.loading = true;
-      return homeVm.getPokemons(homeVm.pokemonIndex, homeVm.pokemonIndex + 9);
+      return homeVm.getPokemons(homeVm.pokemonIndex, homeVm.pokemonIndex + 10);
     }
 
     /**
@@ -34,12 +36,29 @@
      */
     function getPokemons(fromIndex, toIndex) {
       fromIndex = fromIndex ? fromIndex : 1;
-      toIndex = toIndex ? toIndex : fromIndex + 9;
+      toIndex = toIndex ? toIndex : fromIndex + 10;
       for (var index = fromIndex; index < toIndex; index++) {
-        getPokemonById(index);
-        homeVm.pokemonIndex++;
+        getPokemonById(index)
+          .then(function (newPokemon) {
+            if (newPokemon) {
+              addPokemonToLocalStorage(newPokemon);
+              homeVm.pokemonIndex++;
+            }
+          });
       }
       homeVm.loading = false;
+    }
+
+    function addPokemonToLocalStorage(newP) {
+      var doesPokemonAlreadyExists = homeVm.pokemons.find(function (pokemon) {
+        return newP.id === pokemon.id;
+      });
+
+      if (!doesPokemonAlreadyExists) {
+        homeVm.pokemons.push(newP);
+        Pokemon.addPokemonToCache(newP);
+      }
+      return true;
     }
 
     /**
@@ -66,7 +85,8 @@
           if (!pokemonData) {
             return null;
           }
-          var newPokemon = {
+
+          return {
             id: pokemonData.data.id,
             idForImage: ('000' + pokemonData.data.id).slice(-3),
             name: pokemonData.data.name,
@@ -78,10 +98,6 @@
             types: sortArrayByKey(pokemonData.data.types, 'slot'),
             stats: pokemonData.data.stats
           };
-          
-          homeVm.pokemons.push(newPokemon);
-          Pokemon.addPokemonToCache(newPokemon);
-          return homeVm.pokemons;
         });
     }
   }

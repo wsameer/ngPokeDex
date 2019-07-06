@@ -32,41 +32,26 @@
 
         <div class="row">
           <div class="col-6" ng-repeat="pokemon in homeVm.pokemons | orderBy: 'id'" ng-class="$even ? 'pr-1' : 'pl-1'">
+            <!-- POKEMON WIDGET -->
             <div class="widget-panel" ng-class="'bg-' + pokemon.types[0].type.name">
-              <span class="pokemon-number text-white pull-right text-right" ng-bind="'#' + pokemon.idForImage"></span>
-              <div class="pokemon-image">
-                <img class="wd-30" src="https://assets.pokemon.com/assets/cms2/img/pokedex/detail/{{pokemon.idForImage}}.png">
-              </div>
-              <p class="pokemon-name  m-0 text-white">
-                {{pokemon.name | ucfirst}}
-              </p>
-              <div class="pokemon-type" ng-repeat="type in pokemon.types">
-                <div class="badge badge-pill p-pill" ng-class="pokemon.types[0].type.name">
-                  {{type.type.name}}
+              <a href="#!/pokemons/{{pokemon.id}}" class="no-decoration">
+                <span class="pokemon-number text-white pull-right text-right" ng-bind="'#' + pokemon.idForImage"></span>
+                <div class="pokemon-image">
+                  <img class="wd-30"
+                    src="https://assets.pokemon.com/assets/cms2/img/pokedex/detail/{{pokemon.idForImage}}.png">
                 </div>
-              </div>
+                <p class="pokemon-name  m-0 text-white">
+                  {{pokemon.name | ucfirst}}
+                </p>
+                <div class="pokemon-type" ng-repeat="type in pokemon.types">
+                  <div class="badge badge-pill p-pill" ng-class="pokemon.types[0].type.name">
+                    {{type.type.name}}
+                  </div>
+                </div>
+              </a>
             </div>
           </div>
         </div>
-        <!-- <div class="col-sm-6" ng-repeat="pokemon in homeVm.pokemons | orderBy: 'id'">
-          <div class="widget-panel" ng-class="'bg-' + pokemon.types[0].type.name">
-            <a href="#!/pokemons/{{pokemon.id}}" class="no-decoration">
-              <span class="pokemon-number text-white pull-right" ng-bind="'#' + pokemon.idForImage"></span>
-              <div class="pokemon-image">
-                <img src="https://assets.pokemon.com/assets/cms2/img/pokedex/detail/{{pokemon.idForImage}}.png"
-                  width="70%">
-              </div>
-              <h3 class="m-0 counter text-white p-b-0">
-                {{pokemon.name | ucfirst}}
-              </h3>
-              <div class="pokemon-type" ng-repeat="type in pokemon.types">
-                <div class="badge badge-pill p-pill" ng-class="pokemon.types[0].type.name">
-                  {{type.type.name}}
-                </div>
-              </div>
-            </a>
-          </div>
-        </div> -->
       </div>
 
     </div>

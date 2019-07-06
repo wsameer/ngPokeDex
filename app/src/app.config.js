@@ -10,9 +10,9 @@ function config($routeProvider) {
       controllerAs: 'homeVm'
     })
     .when('/pokemons/:id', {
-      templateUrl: 'src/components/pokemon/pokemon.view.html',
-      controller: 'PokemonController',
-      controllerAs: 'pVm'
+      templateUrl: 'src/components/pokemonDetails/pokemonDetails.view.html',
+      controller: 'PokemonDetailsController',
+      controllerAs: 'pokeDetailsVm'
     })
     .otherwise('/pokemons');
 }

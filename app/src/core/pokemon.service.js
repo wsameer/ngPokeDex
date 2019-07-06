@@ -22,7 +22,12 @@
 
     function addPokemonToCache(pokemonObj) {
       if (pokemonObj) {
-        pokemons.push(pokemonObj);
+
+        var thisPokemonExists = pokemons.find(function (pokemon) {
+          return pokemon.id === pokemonObj.id;
+        });
+
+        !thisPokemonExists ? pokemons.push(pokemonObj) : null;
       }
       return;
     }
@@ -50,7 +55,7 @@
         return id === pokemon.id;
       });
 
-      return searchedPokemon;
+      return searchedPokemon[0];
     }
 
     function getPokemonById(id) {
