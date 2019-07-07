@@ -5,12 +5,12 @@ angular
 function config($routeProvider) {
   $routeProvider
     .when('/pokemons', {
-      templateUrl: 'src/components/home/home.view.html',
+      templateUrl: 'src/modules/home/home.view.html',
       controller: 'HomeController',
       controllerAs: 'homeVm'
     })
     .when('/pokemons/:id', {
-      templateUrl: 'src/components/pokemonDetails/pokemonDetails.view.html',
+      templateUrl: 'src/modules/pokemonDetails/pokemonDetails.view.html',
       controller: 'PokemonDetailsController',
       controllerAs: 'pokeDetailsVm'
     })

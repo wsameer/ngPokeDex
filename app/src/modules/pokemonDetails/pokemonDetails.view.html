@@ -47,20 +47,23 @@
         <div class="col-sm pokemon-tabs">
 
             <!-- TABS HERE -->
-            <uib-tabset active="0">
+            <uib-tabset active="activeTab">
                 <uib-tab index="0" heading="About">
                     <div class="col-sm">
                         <div class="pokemon-details">
                             <p ng-bind="pokeDetailsVm.pokemonDetails.flavorText"></p>
                         </div>
                     </div>
-                    <pokemon-about></pokemon-about>
+                    <!-- <pokemon-about flavorText="pokeDetailsVm.pokemonDetails.flavorText"></pokemon-about> -->
                 </uib-tab>
                 <uib-tab index="1" heading="Base Stats">
                     <pokemon-stats></pokemon-stats>
                 </uib-tab>
                 <uib-tab index="2" heading="Evolution">
                     <pokemon-evolution></pokemon-evolution>
+                </uib-tab>
+                <uib-tab index="3" heading="Moves">
+                    <pokemon-moves></pokemon-moves>
                 </uib-tab>
             </uib-tabset>
         </div>

@@ -49,9 +49,30 @@
         border-top-left-radius : 40px;
         border-top-right-radius: 40px;
         background-color       : #fff;
+        margin-top             : -60px;
 
         .pokemon-tabs {
-            padding: 40px 0 10px 0px;
+            padding: 40px 15px 10px 15px;
+
+            .nav-tabs {
+                border: 0;
+
+                .nav-item {
+                    &.active {
+                        border-bottom: 2px solid #7c4fd3;
+                    }
+
+                    .nav-link {
+                        color      : #000;
+                        padding-top: 15px;
+                        border: 0;
+                    }
+                }
+            }
+
+            .tab-content {
+                padding-top: 15px;
+            }
         }
     }
 }

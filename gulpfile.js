@@ -10,14 +10,14 @@ var gulp = require('gulp'),
 var PATH = [
     './app/src/app.module.js',
     './app/src/app.config.js',
-    './app/src/components/**/*.js',
+    './app/src/modules/**/*.js',
     './app/src/shared/**/*.js',
     './app/src/core/**/*.js'
 ];
 
 var LESS_PATH = [
     'app/assets/less/index.less',
-    'app/src/components/**/*.less',
+    'app/src/modules/**/*.less',
 ];
 
 gulp.task('build-js', function () {

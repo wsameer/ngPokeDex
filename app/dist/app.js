@@ -16,12 +16,12 @@ angular
 function config($routeProvider) {
   $routeProvider
     .when('/pokemons', {
-      templateUrl: 'src/components/home/home.view.html',
+      templateUrl: 'src/modules/home/home.view.html',
       controller: 'HomeController',
       controllerAs: 'homeVm'
     })
     .when('/pokemons/:id', {
-      templateUrl: 'src/components/pokemonDetails/pokemonDetails.view.html',
+      templateUrl: 'src/modules/pokemonDetails/pokemonDetails.view.html',
       controller: 'PokemonDetailsController',
       controllerAs: 'pokeDetailsVm'
     })
@@ -160,51 +160,6 @@ function config($routeProvider) {
         return;
       }
 
-      // pokeDetailsVm.pokemonDetails = {
-      //   "id":1,
-      //   "idForImage":"001",
-      //   "name":"bulbasaur",
-      //   "abilities":[{
-      //     "ability": {
-      //       "name":"chlorophyll",
-      //       "url":"https://pokeapi.co/api/v2/ability/34/"
-      //     },
-      //     "is_hidden":true,
-      //     "slot":3
-      //   }, {
-      //     "ability": {
-      //       "name":"overgrow",
-      //       "url":"https://pokeapi.co/api/v2/ability/65/"
-      //     },
-      //     "is_hidden":false,
-      //     "slot":1
-      //   }],
-      //   "base_experience":64,
-      //   "height":7,
-      //   "weight":69,
-      //   "descriptionUrl": "https://pokeapi.co/api/v2/pokemon-species/1/",
-      //   "types":[{
-      //     "slot":1,
-      //     "type": {
-      //       "name":"grass",
-      //       "url":"https://pokeapi.co/api/v2/type/12/"
-      //     }
-      //   }, {
-      //     "slot":2,
-      //     "type": {
-      //       "name":"poison",
-      //       "url":"https://pokeapi.co/api/v2/type/4/"
-      //     }
-      //   }],
-      //   "stats": [{
-      //     "base_stat":45,
-      //     "effort":0,
-      //     "stat": {
-      //       "name":"speed",
-      //       "url":"https://pokeapi.co/api/v2/stat/6/"}},{"base_stat":65,"effort":0,"stat":{"name":"special-defense","url":"https://pokeapi.co/api/v2/stat/5/"}},{"base_stat":65,"effort":1,"stat":{"name":"special-attack","url":"https://pokeapi.co/api/v2/stat/4/"}},{"base_stat":49,"effort":0,"stat":{"name":"defense","url":"https://pokeapi.co/api/v2/stat/3/"}},{"base_stat":49,"effort":0,"stat":{"name":"attack","url":"https://pokeapi.co/api/v2/stat/2/"}},{"base_stat":45,"effort":0,"stat":{"name":"hp","url":"https://pokeapi.co/api/v2/stat/1/"}}]
-      // };
-      // console.log(pokeDetailsVm.pokemonDetails);
-
       if (!pokeDetailsVm.pokemonId) {
         pokeDetailsVm.pokemonId = 1;
       }
@@ -228,6 +183,53 @@ function config($routeProvider) {
     }
   }
 })(window.angular);
+// (function () {
+//     'use strict';
+
+//     function PokemonAboutController() {
+//         var pokemonAboutVm = this;
+
+//         pokemonAboutVm.$onInit = function () {
+//             console.log(this);
+//             //pokemonAboutVm.flavorText = "SAmeer";
+//         };
+
+//         pokemonAboutVm.$onChanges = function (changesObj) {
+//             console.log(changesObj);
+//             if (changesObj.flavorText.currentValue != changesObj.flavorText.previousValue) {
+//                 pokemonAboutVm.flavorText = changesObj.flavorText.currentValue;
+//             }
+//         };
+//     }
+
+//     angular
+//         .module('ngPokedex')
+//         .component('pokemonAbout', {
+//             templateUrl: './src/modules/pokemonDetails/about/about.view.html',
+//             controller: PokemonAboutController,
+//             bindings: {
+//                 flavorText: '@'
+//             }
+//         });
+// })();
+(function () {
+    'use strict';
+
+    angular
+        .module('ngPokedex')
+        .component('pokemonEvolution', {
+            template: "<div class='col-sm text-center'>Work in progress</div>",
+        });
+})();
+(function () {
+    'use strict';
+
+    angular
+        .module('ngPokedex')
+        .component('pokemonStats', {
+            template: "<div class='col-sm text-center'>Work in progress</div>"
+        });
+})();
 (function (angular) {
     'use strict';
 
